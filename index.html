@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>A.G.E.N.T. Risk Framework — Self-Assessment</title>
+<meta name="description" content="Interactive self-assessment tool for CISOs and security teams to evaluate AI agent risk using the A.G.E.N.T. framework. All data stays in your browser." />
+<meta name="color-scheme" content="light dark" />
+
+<!-- Strict CSP: everything served from same origin, no inline scripts, no external resources.
+     'unsafe-inline' is allowed for styles so the dashboard can set SVG colors inline. -->
+<meta http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'self'; frame-ancestors 'none'; object-src 'none';" />
+<meta name="referrer" content="no-referrer" />
+
+<link rel="stylesheet" href="css/styles.css" />
+<link rel="stylesheet" href="css/print.css" media="print" />
+</head>
+<body>
+
+<a href="#view-assess" class="skip-link">Skip to assessment</a>
+
+<header class="app-header no-print">
+  <div class="wrap">
+    <div class="brand">
+      <div class="mark" aria-hidden="true">A.G.E.N.T.</div>
+      <div class="brand-meta">
+        <h1>A.G.E.N.T. Risk Framework</h1>
+        <p>Interactive self-assessment for AI-agent deployments</p>
+      </div>
+    </div>
+    <nav class="app-nav" aria-label="Primary">
+      <button class="nav-btn is-active" data-view="assess">Assessment</button>
+      <button class="nav-btn" data-view="dashboard">Dashboard</button>
+      <button class="nav-btn" data-view="data">Data</button>
+      <button class="nav-btn" data-view="about">About</button>
+    </nav>
+  </div>
+</header>
+
+<div class="sovereignty-banner no-print" role="note">
+  <strong>Private by design.</strong> Every answer stays in your browser. No network calls, no telemetry, no server.
+  <a href="#" id="verify-local" class="inline-link">Verify in DevTools &rarr;</a>
+</div>
+
+<main class="wrap app-main">
+
+  <!-- ================= ASSESSMENT VIEW ================= -->
+  <section id="view-assess" class="view is-active">
+    <div class="intro">
+      <h2>Assess one agent against five questions</h2>
+      <p class="lede">
+        A.G.E.N.T. stands for <b>A</b>ccess Scope, <b>G</b>overnance Model, <b>E</b>xecution Authority,
+        <b>N</b>etwork of Trust, <b>T</b>hreat Surface. Answer each question honestly — the point is to
+        catch high-risk agents before they ship, not to hit a target score.
+      </p>
+    </div>
+
+    <section class="card context-card">
+      <header class="card-head">
+        <h3>Context</h3>
+        <p class="muted">Identifies the assessment in exports.</p>
+      </header>
+      <div id="context-fields" class="context-grid"></div>
+    </section>
+
+    <form id="assessment-form" autocomplete="off" novalidate>
+      <div id="dimensions"></div>
+    </form>
+
+    <div class="sticky-actions no-print" aria-label="Assessment progress">
+      <div class="progress-meta">
+        <div class="progress-bar" aria-hidden="true"><div id="progress-fill"></div></div>
+        <div class="progress-text"><span id="answered-count">0</span> of <span id="answered-total">25</span> answered</div>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn btn-ghost" data-action="load-demo" title="Load a realistic sample agent and jump to the dashboard">Load demo data</button>
+        <button type="button" class="btn btn-ghost" data-action="reset">Reset / start new agent</button>
+        <button type="button" class="btn btn-primary" data-action="view-dashboard">View dashboard &rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= DASHBOARD VIEW ================= -->
+  <section id="view-dashboard" class="view">
+    <div id="dashboard"></div>
+  </section>
+
+  <!-- ================= DATA VIEW ================= -->
+  <section id="view-data" class="view">
+    <div class="intro">
+      <h2>Import / export</h2>
+      <p class="lede">Save a snapshot of this assessment, load one back, or start from a blank template. Everything runs in your browser.</p>
+    </div>
+
+    <div class="data-grid">
+      <section class="card">
+        <header class="card-head">
+          <h3>Export current assessment</h3>
+          <p class="muted">Downloads a CSV with every answer, evidence note, and metadata.</p>
+        </header>
+        <div class="card-body">
+          <button type="button" class="btn btn-primary" data-action="export-csv">Download assessment CSV</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <header class="card-head">
+          <h3>Import an assessment</h3>
+          <p class="muted">Load a previously exported CSV to continue or review.</p>
+        </header>
+        <div class="card-body">
+          <label class="file-input">
+            <input type="file" id="import-file" accept=".csv,text/csv" />
+            <span class="btn btn-ghost">Choose CSV file…</span>
+          </label>
+          <p id="import-status" class="muted" role="status" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section class="card">
+        <header class="card-head">
+          <h3>Download CSV template</h3>
+          <p class="muted">Blank template with field names, example answers, and inline guidance.</p>
+        </header>
+        <div class="card-body">
+          <button type="button" class="btn btn-ghost" data-action="download-template">Download template CSV</button>
+        </div>
+      </section>
+
+      <section class="card danger-card">
+        <header class="card-head">
+          <h3>Clear local data</h3>
+          <p class="muted">Removes the assessment from this browser. Cannot be undone.</p>
+        </header>
+        <div class="card-body">
+          <button type="button" class="btn btn-danger" data-action="clear-data">Clear saved data</button>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT VIEW ================= -->
+  <section id="view-about" class="view">
+    <div class="intro">
+      <h2>About this tool</h2>
+    </div>
+    <div class="prose">
+      <p>
+        This is a self-assessment tool based on the A.G.E.N.T. framework, a five-question
+        pre-deployment checklist for agentic AI.
+      </p>
+      <h3>Scoring</h3>
+      <ul>
+        <li>Each answer carries a risk weight from <b>0</b> (low) to <b>4</b> (critical).</li>
+        <li>Per-dimension score is the average of its five answers.</li>
+        <li>Any answer marked as a <b>tripwire</b> forces a BLOCK verdict on its own.</li>
+      </ul>
+      <h3>Verdicts</h3>
+      <ul>
+        <li><b style="color:#1f8a4c">DEPLOY</b> — overall &lt; 1.5 and every dimension &lt; 2.0.</li>
+        <li><b style="color:#c77d0a">GATE</b> — overall &lt; 2.5 and every dimension &lt; 3.0.</li>
+        <li><b style="color:#b3261e">BLOCK</b> — any tripwire triggered, overall ≥ 2.5, or any dimension ≥ 3.0.</li>
+      </ul>
+      <h3>Security posture</h3>
+      <ul>
+        <li>Zero third-party JavaScript. Every script is served from this origin and auditable.</li>
+        <li>Strict Content-Security-Policy blocks any cross-origin fetch, form post, or frame.</li>
+        <li>No cookies, no analytics, no network calls. Data sits in <code>localStorage</code> only.</li>
+        <li>Reports include a SHA-256 hash of the answer set for tamper-evidence.</li>
+      </ul>
+      <h3>Tracking multiple agents</h3>
+      <p>
+        The tool assesses one agent at a time. For an organizational inventory, export a
+        CSV after each assessment and track them in your GRC system of record. You can re-import any
+        exported CSV later to review or update an assessment.
+      </p>
+      <h3>Related references</h3>
+      <ul>
+        <li><a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/" rel="noopener">OWASP Top 10 for LLM Applications</a> — prompt injection (LLM01), supply chain (LLM03), sensitive-info disclosure (LLM06), and more.</li>
+        <li><a href="https://atlas.mitre.org/" rel="noopener">MITRE ATLAS</a> — adversarial threat landscape for AI systems.</li>
+        <li><a href="https://owaspaibom.org" rel="noopener">OWASP AI Bill of Materials (ABOM)</a> — flight-recorder format for each agent.</li>
+      </ul>
+      <p class="muted"><a href="https://github.com/dannyliv/AGENT-Risk-Framework" rel="noopener">Source on GitHub &rarr;</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="app-footer no-print">
+  <div class="wrap">
+    <span>A.G.E.N.T. Risk Framework <span id="version-tag"></span></span>
+    <span>Static site · no server · all data stays local</span>
+  </div>
+</footer>
+
+<!-- Load order matters: framework (data) → storage → csv → dashboard → app (wires everything) -->
+<script src="js/framework.js"></script>
+<script src="js/demo.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/csv.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
