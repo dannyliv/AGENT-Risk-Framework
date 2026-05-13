@@ -128,7 +128,7 @@ Works in the latest Chrome, Safari, Firefox, and Edge. `SubtleCrypto.digest('SHA
 
 ## Contributing
 
-PRs welcome. The framework is intentionally small — if you'd like to propose new questions, open an issue first so we can keep the set focused.
+This is a small free project, and to reduce supply chain risk I'm not accepting pull requests. You're welcome to fork it and use it however you like under the Apache-2.0 license. If you spot a bug or want to suggest a new question, open an issue and I'll take a look.
 
 ## Credit
 
