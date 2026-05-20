@@ -1,5 +1,6 @@
 /* Local persistence + tamper-evident hash.
-   Data lives only in localStorage on the user's machine. */
+   Data lives only in localStorage on the user's machine.
+   WARNING: Do not paste API keys, passwords, or secrets into evidence fields — they are stored in plain text. */
 
 const STORAGE_KEY = "agent_framework_state_v1";
 
