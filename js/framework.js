@@ -430,3 +430,17 @@ function verdictMeta(v) {
     case "BLOCK":  return { label: "BLOCK",  color: "#b3261e", desc: "Do not deploy. Redesign scope, strip permissions, re-assess." };
   }
 }
+
+// escapeHtml and escapeAttr defined here (first-loaded file) so they are
+// available to all subsequent scripts regardless of load order.
+function escapeHtml(s) {
+  return String(s ?? "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+function escapeAttr(s) {
+  return String(s ?? "")
+    .replace(/&/g, "&amp;").replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
