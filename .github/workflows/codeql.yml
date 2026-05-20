@@ -1,16 +1,11 @@
 name: CodeQL
 
-# Static-analysis scan for JavaScript / TypeScript.
-# Runs on every push to main, every pull request, and weekly as a safety net
-# in case the CodeQL rules themselves have been improved upstream.
-
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
   schedule:
-    # Tuesday 08:15 UTC — off-peak, picks up rule updates quickly.
     - cron: '15 8 * * 2'
 
 permissions:
@@ -29,15 +24,15 @@ jobs:
         language: ['javascript-typescript']
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
+        uses: github/codeql-action/init@458d36d7d4f47d0dd16ca424c1d3cda0060f1360  # v3
         with:
           languages: ${{ matrix.language }}
           queries: security-extended,security-and-quality
 
       - name: Perform CodeQL analysis
-        uses: github/codeql-action/analyze@v3
+        uses: github/codeql-action/analyze@458d36d7d4f47d0dd16ca424c1d3cda0060f1360  # v3
         with:
           category: "/language:${{ matrix.language }}"
