@@ -5,13 +5,11 @@ on:
     branches: [main]
   workflow_dispatch:
 
-# Minimum permissions required by actions/deploy-pages.
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Never cancel an in-flight deploy.
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -33,7 +31,6 @@ jobs:
           cp index.html _site/
           cp -r css _site/css
           cp -r js _site/js
-          cp -r assets _site/assets
 
       - name: Configure Pages
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b  # v5
